@@ -14,9 +14,9 @@ export default hopeTheme({
 
   logo: "/logo.svg",
 
-  repo: "zjycp/vuepress-theme-hope",
+  repo: "zjycp/WittyBigData",
 
-  docsDir: "demo/theme-docs/src",
+  docsDir: "src",
 
   locales: {
     /**
