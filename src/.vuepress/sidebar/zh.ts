@@ -13,7 +13,7 @@ export const zhSidebar = sidebar({
       icon: "discover",
       text: "Hadoop",
       prefix: "hadoop/",
-      link: "hadoop/",
+      // link: "hadoop/", 
       children: "structure",
     },
     {

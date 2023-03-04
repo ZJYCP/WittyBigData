@@ -3,7 +3,7 @@ import { enNavbar, zhNavbar } from "./navbar/index.js";
 import { enSidebar, zhSidebar } from "./sidebar/index.js";
 
 export default hopeTheme({
-  hostname: "https://wbd.emx6.com",
+  hostname: "http://wbd.emx6.com",
 
   author: {
     name: "余生",
@@ -14,27 +14,11 @@ export default hopeTheme({
 
   logo: "/logo.svg",
 
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  repo: "zjycp/vuepress-theme-hope",
 
   docsDir: "demo/theme-docs/src",
 
   locales: {
-    "/en/": {
-      // navbar
-      navbar: enNavbar,
-
-      // sidebar
-      sidebar: enSidebar,
-
-      footer: "Default footer",
-
-      displayFooter: true,
-
-      metaLocales: {
-        editLink: "Edit this page on GitHub",
-      },
-    },
-
     /**
      * Chinese locale config
      */
@@ -58,7 +42,6 @@ export default hopeTheme({
 
   encrypt: {
     config: {
-      "/en/demo/encrypt.html": ["1234"],
       "/demo/encrypt.html": ["1234"],
     },
   },
