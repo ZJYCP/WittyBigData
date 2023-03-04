@@ -2,4 +2,4 @@
 User-agent:*
 Disallow:
 
-Sitemap: http://wbd.emx6.com/witty_big_data/sitemap.xml
+Sitemap: http://wbd.emx6.com/sitemap.xml
