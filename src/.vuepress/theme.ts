@@ -64,10 +64,10 @@ export default hopeTheme({
   },
 
   plugins: {
-    comment: {
-      // @ts-expect-error: You should generate and use your own comment service
-      provider: "Waline",
-    },
+    // comment: {
+    //   // @ts-expect-error: You should generate and use your own comment service
+    //   provider: "Waline",
+    // },
 
     // all features are enabled for demo, only preserve features you need here
     mdEnhance: {
