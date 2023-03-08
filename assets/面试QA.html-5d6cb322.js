@@ -1,0 +1,1 @@
+import{_ as t,V as o,W as c,$ as r,X as e,Y as _}from"./framework-8aef05fa.js";const a={},n=e("p",null,[e("code",null,"more"),_(" 注释之前的内容被视为文章摘要。")],-1);function s(l,m){return o(),c("div",null,[n,r(" more ")])}const f=t(a,[["render",s],["__file","面试QA.html.vue"]]);export{f as default};
