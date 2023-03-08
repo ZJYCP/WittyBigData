@@ -7,7 +7,7 @@ export const zhSidebar = sidebar({
   "/manage":[
     
   ],  
-  "/": [
+  "/basic/": [
     // "",
     {
       icon: "discover",

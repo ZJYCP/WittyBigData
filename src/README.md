@@ -7,11 +7,11 @@ heroText: Witty Big Data
 tagline: 大数据工程师面试指南，一份涵盖大部分大数据开发所需要掌握的核心知识。准备大数据面试，首选 WittyBigData
 actions:
   - text: 使用指南 💡
-    link: /demo/
+    link: /basic/hadoop/
     type: primary
 
   - text: 文档
-    link: /guide/
+    link: /hadoop/
 
 features:
   - title: 面试准备
