@@ -169,32 +169,57 @@ Reduce: (k2; [v2]) -> [(k3; v3)]
 
 <img src="https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230308170135429.png" alt="image-20230308170135429" style="zoom:67%;" />
 
-1. 数据读取组件**InputFormat**(默认为TextInputFormat)会通过**getSplits**方法对输入目录中文件进行逻辑切片规划得到**block**，有多少个block就启动多少个**MapTask**
+1. 数据读取组件**InputFormat**(默认为TextInputFormat)会通过**getSplits**方法对输入目录中文件进行逻辑切片规划得到**split**，有多少个split就启动多少个**MapTask**
 
-2. 将输入文件切分为block之后，由**RecordReader**对象（默认为LineRecordReader）进行读取，以**\n**作为分隔符，返回**<key,value>**,key表示每行首字符的**偏移值**，Value表示这一行文本内容
+   > 关于split与block
 
-3. <key,value>进入用户自定义的Mapper类，执行**map函数**。每读取一行，调用一次
+1. 将输入文件切分为split之后，由**RecordReader**对象（默认为LineRecordReader）进行读取，以**\n**作为分隔符，返回**<key,value>**,key表示每行首字符的**偏移值**，Value表示这一行文本内容
 
-4. Mapper逻辑结束后，将Mapper的每条结果通过**context.write**进行collect数据收集。在collect中，会先进行**分区处理**。
+2. <key,value>进入用户自定义的Mapper类，执行**map函数**。每读取一行，调用一次
+
+   **以下是Map的shuffle过程**
+
+3. Mapper逻辑结束后，将Mapper的每条结果通过**context.write**进行collect数据收集。在collector中，会先进行**分区处理**。
 
    > Partitioner，根据Key或Value以及Reducer的数量决定当前的数据输出交给哪个Reduce Task处理。 默认HashPartitioner**对Key Hash后再以Reducer的数量取模**。
+   >
+   > 对于数据不平衡的情况，可能就要自定义分区算法
 
-5. 数据写入内存(**环形缓冲区**)，作用是收集mapper结果，减少磁盘IO的影响。
+4. 数据写入内存(**环形缓冲区**)，作用是收集mapper结果，减少磁盘IO的影响。
 
    > 环形缓冲器是一个数组，存放kv的序列化数据、元数据信息（分区、kv的起始位置、value的长度)
    >
    > 缓冲区默认的大小是100M。 当缓冲区的数据达到阈值（默认0.8*100=80MB)，会spill溢写数据到磁盘。溢写程序是一个单独的线程，锁定80M内存，输出结果往剩下的20M内存中写。
+   >
+   > ![这里写图片描述](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/20151017165918130.jpeg)
+   >
+   > 存在缓冲区的数据包括存放kv数据的kvbuffer和存放索引的kvmeta。
+   >
+   > 索引包括：value的起始位置、key的起始位置、partition的值、value的长度
 
-6. 溢写程序会80MB空间内的Key做排序。如果设置为**Combiner**，会将具有相同key的kv的v合并在一起。
-7. **合并溢写文件**，对多个溢写文件进行合并，保存为一个文件写入磁盘，并为这个文件提供一个索应，记录每个Reduce对应的数据偏移量。
+5. **排序(sort)**,对80MB空间内的Key做排序。如果设置为**Combiner**，在之后会将具有相同key的kv的v合并在一起。
+
+   > 程序先把Kvbuffer中的数据按照partition值和key两个关键字升序排序(快速排序），**移动的只是索引数据**，排序结果是Kvmeta中数据按照partition为单位聚集在一起，同一partition内的按照key有序。
+
+6. **溢写文件(spill)**。Spill线程根据排过序的Kvmeta挨个partition的把数据吐到溢写文件.out中，一个partition对应的数据吐完之后顺序地吐下个partition，直到把所有的partition遍历完。一个partition在文件中对应的数据也叫段(segment)。
+
+   > ![这里写图片描述](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/20151017173908750.png)
+
+7. **归并(merge)**。针对同一个Mapper的多个spill文件的merge。如果文件比较大，会进行多次spill，产生多个spill文件，需要对多个溢写文件进行归并(merge)并排序，如果有Combine则进行，最后保存为一个文件写入磁盘，并为这个文件提供一个索引，记录每个partition对应的数据偏移量。
+
+   > ![这里写图片描述](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/20151017180604215.png)
+   >
+   > 使用堆排序，
+   >
+   > 归并：<a,1>,<a,2>  => <a,[1,2]>  ？纠正：map端应该是没有这个操作的
 
 ### ReduceTask工作机制
 
 ![image-20230308172158541](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/image-20230308172158541.png)
 
-1. Copy阶段。Reduce进行启动**Fetcher线程**去copy数据，通过**http方式请求**MapTask获取属于自己的文件
-2. Merge阶段。从不同map端copy过来的数据会存放在内存缓存区中。达到溢写条件时，会在磁盘中生成溢写文件（inMemoryMerger），然后启动磁盘到磁盘的Merge方式生成最终的文件（onDiskMerger）。
-3. 合并排序。把分散的数据合并成一个大的数据后，还会再对合并后的数据进行排序
+1. **Copy阶段**。Reduce进行启动**Fetcher线程**去copy数据，通过**http方式请求**MapTask获取属于自己的文件
+2. **Merge阶段**。针对不同Mapper的partition数据进行的merge。从不同map端copy过来的数据会存放在内存缓存区中。达到溢写条件时，会在磁盘中生成溢写文件（inMemoryMerger），然后启动磁盘到磁盘的Merge方式生成最终的文件（onDiskMerger）。
+3. 归并排序。把分散的数据合并成一个大的数据后，还会再对合并后的数据进行排序
 4. 对排序后的kv调用Reduce方法。键相等的键值对调用一次reduce方法，产生零个或多个键值对，把输出kv写到hdfs文件中。
 
 
@@ -267,3 +292,12 @@ Map
 Reduce 读<A-B,C>、<A-B,E>
 
 输出：<A-B ，CE>
+
+
+
+
+
+> 参考
+>
+> 1. [ MapReduce shuffle过程详解_xidianycy的博客-CSDN博客](https://blog.csdn.net/u014374284/article/details/49205885)
+> 2. 
