@@ -57,7 +57,13 @@ export const zhSidebar = sidebar({
       text: "Flink",
       prefix: "Flink/",
       children: "structure",
-    },                        
+    },
+    {
+      icon: "discover",
+      text: "Elasticsearch",
+      prefix: "Elasticsearch/",
+      children: "structure",
+    },         
     // {
     //   text: "文档",
     //   icon: "note",

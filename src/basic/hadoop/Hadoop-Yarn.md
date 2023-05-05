@@ -286,17 +286,45 @@ RM的响应：新分配的Container列表，已完成的Container状态，集群
 
 ## yarn的资源调度
 
+### 资源调度器的分类
+
+不同任务类型对资源有不同的要求，有的对时间要求不是很高（HIVE），有的任务要求及时返回结果（HBase），有的是CPU密集型，有的是IO密集型。
+
+### 基本结构
+
+事件处理器
+
+-   Node_Removed 集群中移除一个计算节点，资源调度器需要收到该事件后从可分配 的资源总量中移除相应的资源量。
+-   Node_Added 集群增加一个节点
+-   Application_added RM 收到一个新的 Application。
+-   Application_Remove 表示一个 Application 运行结束
+-   Container_expired 当一个 Container 分配给 AM 后，如果在一段时间内 AM 没有启动 Container，就触发这个事件。调度器会对该 Container 进行回收。
+-   Node_Update RM 收到 NM 的心跳后，就会触发 Node_Update 事件。
+
+
+
+### 资源调度的三种模型
+
+Apache的hadoop默认capacity，CDH默认fair
+
+1. 双层资源调度模型
+
+
+
+2. 资源保证机制
+
+3. 资源分配算法
+
+4. 资源抢占模型
+
+#### 层级队列管理机制 FIFO 调度策略
+
+
+
+#### Capacity Scheduler
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+#### Fair Scheduler
