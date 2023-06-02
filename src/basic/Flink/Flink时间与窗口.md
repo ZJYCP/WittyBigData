@@ -18,6 +18,8 @@ star: true
 
 <!-- more -->
 
+![水位线与窗口 (1)](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/%E6%B0%B4%E4%BD%8D%E7%BA%BF%E4%B8%8E%E7%AA%97%E5%8F%A3%20(1).png)
+
 ## 时间语义
 
 **事件时间**：一个数据产生的时间，通常是跟随着数据的时间戳
