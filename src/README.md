@@ -16,26 +16,26 @@ actions:
 features:
   - title: 面试准备
     icon: markdown
-    details: 新增文字对齐、上下角标、脚注、标记、任务列表、数学公式、流程图、图表与幻灯片支持
-    link: https://theme-hope.vuejs.press/zh/guide/markdown/
+    details: 大数据面试
+    link: https://wbd.emx6.com
 
-  - title: 大数据
+  - title: 大数据项目
     icon: slides
-    details: 添加幻灯片页面以显示你喜欢的内容
-    link: https://theme-hope.vuejs.press/zh/guide/layout/slides.html
+    details: 大数据项目实战
+    link: https://wbd.emx6.com
 
-  - title: 布局增强
+  - title: 数仓开发
     icon: layout
-    details: 添加路径导航、页脚、改进的导航栏、改进的页面导航等。
-    link: https://theme-hope.vuejs.press/zh/guide/layout/
+    details: 数据建模规范
+    link: https://wbd.emx6.com
 
 
 copyright: false
-footer: 使用 <a href="https://theme-hope.vuejs.press/" target="_blank">VuePress Theme Hope</a> 主题 | MIT 协议, 版权所有 © 2019-present Mr.Hope
+footer: 版权所有 © 2022-present Mr.椿
 ---
 
-这是项目主页的案例。你可以在这里放置你的主体内容。
+<!-- 这是项目主页的案例。你可以在这里放置你的主体内容。
 
 想要使用此布局，你需要在页面 front matter 中设置 `home: true`。
 
-配置项的相关说明详见 [项目主页配置](https://theme-hope.vuejs.press/zh/guide/layout/home/)。
+配置项的相关说明详见 [项目主页配置](https://theme-hope.vuejs.press/zh/guide/layout/home/)。 -->
