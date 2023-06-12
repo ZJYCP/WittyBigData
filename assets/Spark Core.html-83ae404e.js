@@ -1,1 +1,0 @@
-import{_ as o,V as r,W as t,$ as a,X as e,Y as c}from"./framework-8aef05fa.js";const n={},s=e("p",null,[e("code",null,"more"),c(" 注释之前的内容被视为文章摘要。")],-1);function _(l,m){return r(),t("div",null,[s,a(" more ")])}const f=o(n,[["render",_],["__file","Spark Core.html.vue"]]);export{f as default};
