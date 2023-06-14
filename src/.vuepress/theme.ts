@@ -37,6 +37,7 @@ export default hopeTheme({
       metaLocales: {
         editLink: "在 GitHub 上编辑此页",
       },
+      pageInfo:["Author","Date","Word","ReadingTime","PageView","Category","Tag"],
     },
   },
 
@@ -45,6 +46,8 @@ export default hopeTheme({
       "/demo/encrypt.html": ["1234"],
     },
   },
+
+
 
   plugins: {
     // comment: {
