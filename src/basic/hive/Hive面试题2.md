@@ -12,15 +12,13 @@ sticky: false
 star: true
 ---
 
-Hive常见面试题
+Hive常见企业面试题
 
 <!-- more -->
 
 
 
-
-
-> 整理作者：蓦然                                     知识星球、公众号（同名）：旧时光大数据
+![Hive面试](https://blog-1252832257.cos.ap-shanghai.myqcloud.com/Hive%E9%9D%A2%E8%AF%95.png)
 
 ## 说下为什么要使用Hive？Hive的优缺点？Hive的作用是什么？ 
 
@@ -32,7 +30,7 @@ Hive常见面试题
 
 1、为什么要使用Hive？
 
-Hive是Hadoop生态系统中比不可少的一个工具，它提供了一种SQL(结构化查询语言)方言，可以查询存储在Hadoop分布式文件系统（HDFS）中的数据或其他和Hadoop集成的文件系统，如MapR-FS、Amazon的S3和像HBase（Hadoop数据仓库）和Cassandra这样的数据库中的数据。
+Hive是Hadoop生态系统中比不可少的一个工具，它提供了一种SQL(结构化查询语言)方言，可以查询存储在**Hadoop分布式文件系统（HDFS）中的数据或其他和Hadoop集成的文件系统**，如MapR-FS、Amazon的S3和像HBase（Hadoop数据仓库）和Cassandra这样的数据库中的数据。
 
 大多数数据仓库应用程序都是使用关系数据库进行实现的，并使用SQL作为查询语言。Hive降低了将这些应用程序转移到Hadoop系统上的难度。凡是会使用SQL语言的开发人员都可以很轻松的学习并使用Hive。如果没有Hive，那么这些用户就必须学习新的语言和工具，然后才能应用到生产环境中。另外，相比其他工具，Hive更便于开发人员将基于SQL的应用程序转移到Hadoop中。如果没有Hive，那么开发者将面临一个艰巨的挑战，如何将他们的SQL应用程序移植到Hadoop上。
 
@@ -40,13 +38,13 @@ Hive是Hadoop生态系统中比不可少的一个工具，它提供了一种SQL(
 
 优点
 
-1）Hive使用类似于SQL的查询语言（HiveQL）来查询和分析存储在Hadoop分布式文件系统中的数据，易于使用和学习。
+1）Hive使用**类似于SQL的查询语言**（HiveQL）来查询和分析存储在Hadoop分布式文件系统中的数据，**易于使用和学习**。
 
-2）避免了去写MapReduce，减少开发人员的学习成本。
+2）**避免了去写MapReduce**，减少开发人员的学习成本。
 
-3）Hive的执行延迟比较高，因此Hive常用于数据分析，对实时性要求不高的场合。
+3）Hive的执行**延迟比较高**，因此Hive常用于**数据分析**，对实时性要求不高的场合。
 
-4）Hive是基于Hadoop的数据仓库工具，能够处理大规模数据集，支持非结构化和半结构化数据。
+4）Hive是基于Hadoop的数据仓库工具，能够处理大规模数据集，**支持非结构化和半结构化数据**。
 
 5）Hive支持自定义函数（UDF、UDAF、UDTF）和插件，可以扩展其功能和能力，满足不同的需求。
 
@@ -58,13 +56,13 @@ Hive是Hadoop生态系统中比不可少的一个工具，它提供了一种SQL(
 
 ●迭代式算法无法表达
 
-●数据挖掘方面不擅长，由于MapReduce数据处理流程的限制，效率更高的算法却无法实现。
+●**数据挖掘方面不擅长**，由于MapReduce数据处理流程的限制，效率更高的算法却无法实现。
 
-2）Hive的效率比较低
+2）**Hive的效率比较低**
 
 ●Hive自动生成的MapReduce作业，通常情况下不够智能化
 
-●Hive调优比较困难，粒度较粗
+●Hive**调优比较困难**，粒度较粗
 
 Hive不是一个完整的数据库。Hadoop以及HDFS的设计本身约束和局限性地限制了Hive所能胜任的工作。其中最大的限制就是Hive不支持记录级别的更新、插入或者删除操作。但是用户可以通过查询生成新表或者将查询结果导入到文件中。同时，因为Hadoop是面向批处理的系统，而MapReduce任务（job）的启动过程需要消耗较长的时间，所以Hive查询延时比较严重。传统数据库中在秒级别可以完成的查询，在Hive中，即使数据集相对较小，往往也需要执行更长的时间。
 
@@ -74,7 +72,7 @@ Hive是由Facebook开源用于解决海量结构化日志的数据统计工具�
 
 Hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张表，并提供类SQL查询功能。
 
-Hive的本质是将HQL转化成MapReduce程序
+Hive的本质是将**HQL转化成MapReduce程序**
 
 ●Hive处理的数据存储在HDFS
 
@@ -90,7 +88,7 @@ Hive的本质是将HQL转化成MapReduce程序
 
 参考答案：
 
-Hive是由Facebook开源用于解决海量结构化日志的数据统计工具。
+Hive是由Facebook开源用于解决海量结构化日志的**数据统计工具**。
 
 Hive是一个基于Hadoop的数据仓库工具，它提供了类似于SQL的接口，允许用户使用HQL（Hive Query Language）来查询和分析数据。
 
@@ -128,7 +126,7 @@ CLI（command-line interface）、JDBC/ODBC(jdbc访问hive)、WEBUI（浏览器�
 
 **元数据：Metastore**
 
-元数据包括：表名、表所属的数据库（默认是default）、表的拥有者、列/分区字段、表的类型（是否是外部表）、表的数据所在目录等；
+元数据包括：表名、表所属的数据库（默认是default）、表的拥有者、**列/分区字段、表的类型**（是否是外部表）、**表的数据所在目录**等；
 
 默认存储在自带的derby数据库中，推荐使用MySQL存储Metastore
 
@@ -142,11 +140,11 @@ CLI（command-line interface）、JDBC/ODBC(jdbc访问hive)、WEBUI（浏览器�
 
 对AST进行语法分析，比如表是否存在、字段是否存在、SQL语义是否有误。
 
-2）编译器（Physical Plan）：将AST编译生成逻辑执行计划。
+2）编译器（Physical Plan）：将AST编译生成**逻辑执行计划**。
 
-3）优化器（Query Optimizer）：对逻辑执行计划进行优化。
+3）优化器（Query Optimizer）：对逻辑执行计划进行**优化**。
 
-4）执行器（Execution）：把逻辑执行计划转换成可以运行的物理计划。对于Hive来说，就是MR/Spark。
+4）执行器（Execution）：把逻辑执行计划转换成可以**运行的物理计划**。对于Hive来说，就是MR/Spark。
 
 **2、运行机制图**
 
