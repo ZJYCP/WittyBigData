@@ -1,0 +1,22 @@
+---
+title: Flink DataStream API
+icon: page
+order: 70
+author: 余生
+category:
+  - 大数据组件
+tag:
+  - Flink
+  - 时间
+  - 窗口
+  - 知识点
+sticky: false
+star: true
+
+
+
+---
+
+主要介绍Flink中的DataStream API
+
+<!-- more -->
